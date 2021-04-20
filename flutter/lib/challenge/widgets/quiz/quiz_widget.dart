@@ -12,34 +12,79 @@ class QuizWidget extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Text(
-            title,
-            style: AppTextStyles.heading,
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Text(
+              title,
+              style: AppTextStyles.heading,
+            ),
           ),
           SizedBox(height: 24),
-          AwnserWidget(
-            title:
-                "Possibilita a criação de aplicativos compilados nativamente",
-            isRight: false,
-            isSelected: false,
-          ),
-          AwnserWidget(
-            title:
-                "Possibilita a criação de aplicativos compilados nativamente",
-            isRight: true,
-            isSelected: true,
-          ),
-          AwnserWidget(
-            title:
-                "Possibilita a criação de aplicativos compilados nativamente",
-            isRight: false,
-            isSelected: false,
-          ),
-          AwnserWidget(
-            title:
-                "Possibilita a criação de aplicativos compilados nativamente",
-            isRight: false,
-            isSelected: false,
+          Expanded(
+            child: ListView(
+              children: [
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: true,
+                  isSelected: true,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+                AwnserWidget(
+                  title:
+                      "Possibilita a criação de aplicativos compilados nativamente",
+                  isRight: false,
+                  isSelected: false,
+                ),
+              ],
+            ),
           ),
         ],
       ),
