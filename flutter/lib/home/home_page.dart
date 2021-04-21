@@ -42,48 +42,55 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBarWidget(
         user: controller.user!,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                LeveButtonWidget(
-                  label: "Fácil",
-                ),
-                LeveButtonWidget(
-                  label: "Médio",
-                ),
-                LeveButtonWidget(
-                  label: "Difícil",
-                ),
-                LeveButtonWidget(
-                  label: "Perito",
-                ),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            SizedBox(height: 24),
+            Container(
+              height: 32,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  LeveButtonWidget(
+                    label: "Fácil",
+                  ),
+                  SizedBox(width: 5),
+                  LeveButtonWidget(
+                    label: "Médio",
+                  ),
+                  SizedBox(width: 5),
+                  LeveButtonWidget(
+                    label: "Difícil",
+                  ),
+                  SizedBox(width: 5),
+                  LeveButtonWidget(
+                    label: "Perito",
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 24),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              children: controller.quizzes!
-                  .map(
-                    (e) => QuizCardWidget(
-                      title: e.title,
-                      completed:
-                          "${e.questionAnswered} de ${e.questions.length}",
-                      percent: e.questionAnswered / e.questions.length,
-                    ),
-                  )
-                  .toList(),
+            SizedBox(height: 24),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: controller.quizzes!
+                    .map(
+                      (e) => QuizCardWidget(
+                        title: e.title,
+                        completed:
+                            "${e.questionAnswered} de ${e.questions.length}",
+                        percent: e.questionAnswered / e.questions.length,
+                        image: e.image,
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

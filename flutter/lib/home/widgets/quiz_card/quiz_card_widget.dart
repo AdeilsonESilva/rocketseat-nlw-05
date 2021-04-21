@@ -7,12 +7,14 @@ class QuizCardWidget extends StatelessWidget {
   final String title;
   final String completed;
   final double percent;
+  final String image;
 
   const QuizCardWidget({
     Key? key,
     required this.title,
     required this.completed,
     required this.percent,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -26,35 +28,35 @@ class QuizCardWidget extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            child: Image.asset(AppImages.blocks),
-          ),
-          SizedBox(height: 24),
-          Text(
-            title,
-            style: AppTextStyles.heading15,
-          ),
-          SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              child: Image.asset(AppImages.source[image] ?? AppImages.notFound),
+            ),
+            SizedBox(height: 24),
+            Text(
+              title,
+              style: AppTextStyles.heading15,
+            ),
+            SizedBox(height: 24),
+            Row(
+              children: [
+                Text(
                   completed,
                   style: AppTextStyles.body11,
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: ProgressIndicatorWidget(value: percent),
-              )
-            ],
-          )
-        ],
+                SizedBox(width: 8),
+                Expanded(
+                  child: ProgressIndicatorWidget(value: percent),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
