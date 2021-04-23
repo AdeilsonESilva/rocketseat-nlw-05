@@ -1,87 +1,97 @@
-import 'package:dev_quiz/core/core.dart';
 import 'package:flutter/material.dart';
 
+import 'package:dev_quiz/core/core.dart';
+import 'package:dev_quiz/shared/models/awnser_model.dart';
+
 class AwnserWidget extends StatelessWidget {
-  final String title;
-  final bool isRight;
+  final AwnserModel awnser;
   final bool isSelected;
+  final bool disabled;
+  final VoidCallback onTap;
 
   const AwnserWidget({
     Key? key,
-    required this.title,
-    this.isRight = false,
+    required this.awnser,
     this.isSelected = false,
+    required this.disabled,
+    required this.onTap,
   }) : super(key: key);
 
   Color get _color => isSelected
-      ? isRight
+      ? awnser.isRight
           ? AppColors.darkGreen
           : AppColors.darkRed
       : AppColors.border;
 
   Color get _border => isSelected
-      ? isRight
+      ? awnser.isRight
           ? AppColors.lightGreen
           : AppColors.lightRed
       : AppColors.border;
 
   Color get _colorCard => isSelected
-      ? isRight
+      ? awnser.isRight
           ? AppColors.lightGreen
           : AppColors.lightRed
       : AppColors.white;
 
   Color get _borderCard => isSelected
-      ? isRight
+      ? awnser.isRight
           ? AppColors.green
           : AppColors.red
       : AppColors.border;
 
   TextStyle get _textStyle => isSelected
-      ? isRight
+      ? awnser.isRight
           ? AppTextStyles.bodyDarkGreen
           : AppTextStyles.bodyDarkRed
       : AppTextStyles.body;
 
-  IconData get _selectedIconRight => isRight ? Icons.check : Icons.close;
+  IconData get _selectedIconRight => awnser.isRight ? Icons.check : Icons.close;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: _colorCard,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.fromBorderSide(BorderSide(color: _borderCard)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: _textStyle,
-              ),
+    return IgnorePointer(
+      ignoring: disabled,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: _colorCard,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.fromBorderSide(BorderSide(color: _borderCard)),
             ),
-            Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                color: _color,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.fromBorderSide(BorderSide(color: _border)),
-              ),
-              child: isSelected
-                  ? Icon(
-                      _selectedIconRight,
-                      size: 16,
-                      color: Colors.white,
-                    )
-                  : null,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    awnser.title,
+                    style: _textStyle,
+                  ),
+                ),
+                Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: _color,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.fromBorderSide(BorderSide(color: _border)),
+                  ),
+                  child: isSelected
+                      ? Icon(
+                          _selectedIconRight,
+                          size: 16,
+                          color: Colors.white,
+                        )
+                      : null,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -1,11 +1,25 @@
-import 'package:dev_quiz/challenge/widgets/awnser/awnser_widget.dart';
-import 'package:dev_quiz/core/core.dart';
 import 'package:flutter/material.dart';
 
-class QuizWidget extends StatelessWidget {
-  final String title;
+import 'package:dev_quiz/challenge/widgets/awnser/awnser_widget.dart';
+import 'package:dev_quiz/core/core.dart';
+import 'package:dev_quiz/shared/models/question_model.dart';
 
-  const QuizWidget({Key? key, required this.title}) : super(key: key);
+class QuizWidget extends StatefulWidget {
+  final QuestionModel question;
+  final VoidCallback onChange;
+
+  const QuizWidget({
+    Key? key,
+    required this.question,
+    required this.onChange,
+  }) : super(key: key);
+
+  @override
+  _QuizWidgetState createState() => _QuizWidgetState();
+}
+
+class _QuizWidgetState extends State<QuizWidget> {
+  int? indexSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -14,75 +28,31 @@ class QuizWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 64),
           Text(
-            title,
+            widget.question.title,
             style: AppTextStyles.heading,
           ),
           SizedBox(height: 24),
           Expanded(
             child: ListView(
-              children: [
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: true,
-                  isSelected: true,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-                AwnserWidget(
-                  title:
-                      "Possibilita a criação de aplicativos compilados nativamente",
-                  isRight: false,
-                  isSelected: false,
-                ),
-              ],
+              children: widget.question.awnsers.map(
+                (awnser) {
+                  var index = widget.question.awnsers.indexOf(awnser);
+                  return AwnserWidget(
+                    awnser: awnser,
+                    isSelected: index == indexSelected,
+                    disabled: indexSelected != null,
+                    onTap: () {
+                      setState(() {
+                        indexSelected = index;
+                      });
+                      Future.delayed(Duration(milliseconds: 500))
+                          .then((value) => widget.onChange()); // TODO refatorar
+                    },
+                  );
+                },
+              ).toList(),
             ),
           ),
         ],
