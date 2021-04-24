@@ -33,35 +33,45 @@ class _ChartWidgetState extends State<ChartWidget>
     super.initState();
   }
 
+  void _restartAnimation() {
+    _controller.reset();
+    _controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 80,
       height: 80,
-      child: AnimatedBuilder(
-        animation: _animation,
-        builder: (context, _) => Stack(
-          children: [
-            Center(
-              child: Container(
-                width: 80,
-                height: 80,
-                child: CircularProgressIndicator(
-                  strokeWidth: 10,
-                  value: _animation.value,
-                  backgroundColor: AppColors.chartSecondary,
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.chartPrimary),
+      child: GestureDetector(
+        onDoubleTap: () {
+          _restartAnimation();
+        },
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, _) => Stack(
+            children: [
+              Center(
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 10,
+                    value: _animation.value,
+                    backgroundColor: AppColors.chartSecondary,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColors.chartPrimary),
+                  ),
                 ),
               ),
-            ),
-            Center(
-              child: Text(
-                "${(_animation.value * 100).toInt()}%",
-                style: AppTextStyles.heading,
-              ),
-            )
-          ],
+              Center(
+                child: Text(
+                  "${(_animation.value * 100).toInt()}%",
+                  style: AppTextStyles.heading,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
