@@ -1,17 +1,20 @@
-import 'package:dev_quiz/challenge/challenge_controller.dart';
 import 'package:flutter/material.dart';
 
+import 'package:dev_quiz/challenge/challenge_controller.dart';
 import 'package:dev_quiz/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:dev_quiz/challenge/widgets/question_indicator/question_indicator_widget.dart';
 import 'package:dev_quiz/challenge/widgets/quiz/quiz_widget.dart';
+import 'package:dev_quiz/result/result_page.dart';
 import 'package:dev_quiz/shared/models/question_model.dart';
 
 class ChallengePage extends StatefulWidget {
   final List<QuestionModel> questions;
+  final String title;
 
   const ChallengePage({
     Key? key,
     required this.questions,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -37,6 +40,13 @@ class _ChallengePageState extends State<ChallengePage> {
 
     pageController.nextPage(
         duration: Duration(milliseconds: 250), curve: Curves.linear);
+  }
+
+  void onSelected(bool value) {
+    if (value) {
+      controller.correctAnswers++;
+    }
+    nextPage();
   }
 
   @override
@@ -69,7 +79,7 @@ class _ChallengePageState extends State<ChallengePage> {
         children: widget.questions
             .map((e) => QuizWidget(
                   question: e,
-                  onChange: nextPage,
+                  onSelected: onSelected,
                 ))
             .toList(),
       ),
@@ -98,7 +108,16 @@ class _ChallengePageState extends State<ChallengePage> {
                     Expanded(
                       child: NextButtonWidget.darkGreen(
                         label: "Confirmar",
-                        onTap: () => Navigator.pop(context),
+                        onTap: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ResultePage(
+                              title: widget.title,
+                              totalQuestions: widget.questions.length,
+                              correctAnswers: controller.correctAnswers,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                 ],

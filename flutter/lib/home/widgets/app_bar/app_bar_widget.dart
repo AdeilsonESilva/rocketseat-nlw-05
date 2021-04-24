@@ -61,7 +61,7 @@ class AppBarWidget extends PreferredSize {
                 ),
                 Align(
                   alignment: Alignment(0, 1),
-                  child: ScoreCard(score: user.score),
+                  child: ScoreCardWidget(percent: user.score / 100),
                 ),
               ],
             ),
